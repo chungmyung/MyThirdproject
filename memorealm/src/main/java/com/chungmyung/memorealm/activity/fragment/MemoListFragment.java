@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import com.chungmyung.memorealm.R;
 import com.chungmyung.memorealm.activity.Models.Memo;
 import com.chungmyung.memorealm.activity.adapter.MemoRecyclerAdapter;
+import com.chungmyung.memorealm.models.Memo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 
 public class MemoListFragment extends Fragment {
