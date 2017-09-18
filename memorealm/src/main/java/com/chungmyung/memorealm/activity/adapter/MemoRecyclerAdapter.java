@@ -14,6 +14,7 @@ import java.util.Stack;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by user on 2017-09-18.
@@ -22,6 +23,18 @@ import io.realm.Realm;
 public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecyclerAdapter.ViewHolder> {
 
     private Stack<Memo> mUndoStack;
+
+    public void delete(Memo memo) {
+        Realm realm = Realm.getDefaultInstance();
+        mUndoStack.push(realm.copyFromRealm(memo));
+        realm.beginTransaction();
+
+        memo.deleteFromRealm();
+
+        realm.commitTransaction();
+        realm.close();
+    }
+
 
     public void undo() {
         Realm realm = Realm.getDefaultInstance();
@@ -32,6 +45,14 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
 
         realm.commitTransaction();
         realm.close();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClicked(Memo memo);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
     }
 
     public MemoRecyclerAdapter(@Nullable OrderedRealmCollection<Memo> data, boolean autoUpdate) {
