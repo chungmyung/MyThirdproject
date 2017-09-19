@@ -58,8 +58,6 @@ public class Memo extends RealmObject {
         return INTEGER_COUNTER.getAndIncrement();
     }
 
-
-
     @Override
     public String toString() {
         return "Memo{" +

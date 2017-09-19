@@ -19,6 +19,12 @@ public class MyApplication extends Application {
         RealmConfiguration.Builder config = new RealmConfiguration.Builder();
         config.deleteRealmIfMigrationNeeded();
         Realm.setDefaultConfiguration(config.build());
+
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build());
     }
 }
 
