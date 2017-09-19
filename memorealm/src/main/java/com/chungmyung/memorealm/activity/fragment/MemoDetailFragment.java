@@ -19,6 +19,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.Realm;
 
+import static com.chungmyung.memorealm.activity.Models.Memo.getNewId;
+
 public class MemoDetailFragment extends Fragment {
 
 
@@ -71,7 +73,7 @@ public class MemoDetailFragment extends Fragment {
         try {
             Memo memo = null;
             if (mMode == MODE_ADD) {
-                memo = mRealm.createObject(Memo.class, Memo.getNewId(mRealm));
+                memo = mRealm.createObject(Memo.class, getNewId(mRealm));
             } else {
                 memo = mMemo;
             }

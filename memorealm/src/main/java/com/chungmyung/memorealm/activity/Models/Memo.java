@@ -13,7 +13,7 @@ import io.realm.annotations.Required;
 
 public class Memo extends RealmObject {
 
-    private static AtomicInteger INTEGET_COUNTER;
+    private static AtomicInteger INTEGER_COUNTER;
 
     @PrimaryKey
     private int id;
@@ -47,15 +47,15 @@ public class Memo extends RealmObject {
     }
 
     public static int getNewId(Realm realm) {
-        if (INTEGET_COUNTER == null) {
-            INTEGET_COUNTER = new AtomicInteger(0);
+        if (INTEGER_COUNTER == null) {
+            INTEGER_COUNTER = new AtomicInteger(0);
 
             Number maxId = realm.where(Memo.class).max("id");
             if (maxId != null) {
-                INTEGET_COUNTER.set(maxId.intValue() + 1);
+                INTEGER_COUNTER.set(maxId.intValue() + 1);
             }
         }
-        return  INTEGET_COUNTER.getAndIncrement();
+        return  INTEGER_COUNTER.getAndIncrement();
 
     }
 

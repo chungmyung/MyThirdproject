@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chungmyung.memorealm.R;
 import com.chungmyung.memorealm.activity.Models.Memo;
 
 import java.util.Stack;
@@ -69,7 +70,7 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_2, parent, false);
+                .inflate(R.layout.item_memo, parent, false);
         return new ViewHolder(view,mListener);
     }
 
@@ -90,8 +91,8 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
        //item 하나에 대한 뷰가 itemview임. 여기에 이벤트를 건다..
         public ViewHolder(View itemView, final OnItemClickedListener listener) {
             super(itemView);
-            titleTextView = itemView.findViewById(android.R.id.text1);
-            memoTextView = itemView.findViewById(android.R.id.text2);
+            titleTextView = itemView.findViewById(R.id.text1);
+            memoTextView = itemView.findViewById(R.id.text2);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
