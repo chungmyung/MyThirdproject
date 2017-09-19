@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.chungmyung.memorealm.R;
 import com.chungmyung.memorealm.activity.Models.Memo;
@@ -22,7 +23,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 
-public class MemoListFragment extends Fragment {
+public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.OnItemClickedListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -40,17 +41,32 @@ public class MemoListFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         mRealm = Realm.getDefaultInstance();
 
-        // 아래 줄치기..
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL)) ;
+        setUPRecyclerView();
 
-        RealmResults<Memo> data = mRealm.where(Memo.class).findAll();
-        mAdapter= new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
 
+        return view;
+    }
+
+    private void setUPRecyclerView() {
+
+        //리사클러 뷰 레이아웃 매니저
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 //        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
-        return view;
+        // Realm에서 데이터  읽어오기
+        RealmResults<Memo> data = mRealm.where(Memo.class).findAll();
+
+        // 어뎁터에 데이터 설정
+        mAdapter= new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
+
+        //ㄱ클릭 이벤트
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // 아래 줄치기..
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL)) ;
+
     }
 
     @Override
@@ -60,4 +76,9 @@ public class MemoListFragment extends Fragment {
         mRealm.close();
     }
 
+    @Override
+    public void onItemClicked(int position) {
+        Toast.makeText(getContext(), "" + position, Toast.LENGTH_SHORT).show();
+
+    }
 }
