@@ -3,10 +3,9 @@ package com.chungmyung.memorealm.activity.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +40,11 @@ public class MemoListFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         mRealm = Realm.getDefaultInstance();
 
+        // 아래 줄치기..
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL)) ;
+
         RealmResults<Memo> data = mRealm.where(Memo.class).findAll();
-        mAdapter= new MemoRecyclerAdapter(data);
+        mAdapter= new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

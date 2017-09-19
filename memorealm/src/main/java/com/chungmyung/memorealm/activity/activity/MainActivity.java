@@ -3,12 +3,9 @@ package com.chungmyung.memorealm.activity.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.chungmyung.memorealm.R;
 
@@ -29,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-//
-//        / 한번만 붙이겠다
+
+//        한번만 붙이겠다
 //        if (savedInstanceState == null) {
 //            addFragmentTransaction(new MemoListFragment());
 //        }
 //    }
-//
+
 //    private void addFragmentTransaction(Fragment fragment) {
-//        getSupportFragmentManager().beginTransaction()
+//       getSupportFragmentManager().beginTransaction()
 //                .add(R.id.container, fragment)
 //                .commit();
 //    }
@@ -46,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction()
 //                .replace(R.id.container, fragment)
 //                .commit();
-    }
+//    }
 
+    }
 }

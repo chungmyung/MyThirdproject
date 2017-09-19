@@ -12,9 +12,8 @@ import com.chungmyung.memorealm.activity.Models.Memo;
 import java.util.Stack;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmRecyclerViewAdapter;
 import io.realm.Realm;
-import io.realm.RealmResults;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by user on 2017-09-18.
@@ -22,8 +21,20 @@ import io.realm.RealmResults;
 
 public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecyclerAdapter.ViewHolder> {
 
+
+    public interface OnItemClickedListener {
+        void onItemClicked(int position);
+    }
+
+    private OnItemClickedListener mListener ;
+
+    // 외부에서 연결하도록 listener로 정함.
+    public void setOnItemClickListener(OnItemClickedListener listener) {
+        this.mListener = listener;
+    }
+
     private Stack<Memo> mUndoStack;
-    private OnItemClickListener mListener;
+
 
     public void delete(Memo memo) {
         Realm realm = Realm.getDefaultInstance();
@@ -48,13 +59,6 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         realm.close();
     }
 
-    public interface OnItemClickListener {
-        void onItemClicked(Memo memo);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener;
-    }
 
     public MemoRecyclerAdapter(@Nullable OrderedRealmCollection<Memo> data) {
         super(data, true);
@@ -66,7 +70,7 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(android.R.layout.simple_list_item_2, parent, false);
-        return new MemoRecyclerAdapter.ViewHolder(view);
+        return new ViewHolder(view,mListener);
     }
 
     @Override
@@ -83,10 +87,17 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         TextView memoTextView;
         public Memo memo;
 
-        public ViewHolder(View itemView) {
+       //item 하나에 대한 뷰가 itemview임. 여기에 이벤트를 건다..
+        public ViewHolder(View itemView, final OnItemClickedListener listener) {
             super(itemView);
             titleTextView = itemView.findViewById(android.R.id.text1);
             memoTextView = itemView.findViewById(android.R.id.text2);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClicked(getAdapterPosition());
+                }
+            });
         }
     }
 }

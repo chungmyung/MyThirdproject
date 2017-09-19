@@ -45,6 +45,8 @@ public class Memo extends RealmObject {
     public void setMemo(String memo) {
         this.memo = memo;
     }
+
+//  새 ID를 추가 해주는 코드
     public static int getNewId(Realm realm) {
         if (INTEGER_COUNTER == null) {
             INTEGER_COUNTER = new AtomicInteger(0);
@@ -54,7 +56,6 @@ public class Memo extends RealmObject {
                 INTEGER_COUNTER.set(maxId.intValue() + 1);
             }
         }
-
         return INTEGER_COUNTER.getAndIncrement();
     }
 
