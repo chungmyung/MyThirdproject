@@ -23,6 +23,7 @@ import io.realm.RealmResults;
 public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecyclerAdapter.ViewHolder> {
 
     private Stack<Memo> mUndoStack;
+    private OnItemClickListener mListener;
 
     public void delete(Memo memo) {
         Realm realm = Realm.getDefaultInstance();
@@ -55,9 +56,9 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         this.mListener = listener;
     }
 
-    public MemoRecyclerAdapter(@Nullable OrderedRealmCollection<Memo> data, boolean autoUpdate) {
-        super(data, autoUpdate);
-        setHasStableIds(true);
+    public MemoRecyclerAdapter(@Nullable OrderedRealmCollection<Memo> data) {
+        super(data, true);
+        mUndoStack = new Stack<>();
     }
 
 

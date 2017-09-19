@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.chungmyung.memorealm.R;
 import com.chungmyung.memorealm.activity.Models.Memo;
 import com.chungmyung.memorealm.activity.adapter.MemoRecyclerAdapter;
-import com.chungmyung.memorealm.models.Memo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +37,7 @@ public class MemoListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmemt_memo_list, container, false);
+        View view = inflater.inflate(R.layout.fragmemt_memo_list, container, true);
         unbinder = ButterKnife.bind(this, view);
         mRealm = Realm.getDefaultInstance();
 
