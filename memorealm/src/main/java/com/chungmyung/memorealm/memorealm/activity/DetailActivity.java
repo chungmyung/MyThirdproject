@@ -1,12 +1,12 @@
-package com.chungmyung.memorealm.activity.activity;
+package com.chungmyung.memorealm.memorealm.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.chungmyung.memorealm.R;
-import com.chungmyung.memorealm.activity.Models.Memo;
-import com.chungmyung.memorealm.activity.fragment.MemoDetailFragment;
+import com.chungmyung.memorealm.memorealm.Models.Memo;
+import com.chungmyung.memorealm.memorealm.fragment.MemoDetailFragment;
 
 import io.realm.Realm;
 

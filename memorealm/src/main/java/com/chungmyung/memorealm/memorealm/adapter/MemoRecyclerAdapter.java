@@ -1,4 +1,4 @@
-package com.chungmyung.memorealm.activity.adapter;
+package com.chungmyung.memorealm.memorealm.adapter;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chungmyung.memorealm.R;
-import com.chungmyung.memorealm.activity.Models.Memo;
+import com.chungmyung.memorealm.memorealm.Models.Memo;
 
 import java.util.Stack;
 
@@ -21,18 +21,6 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 
 public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecyclerAdapter.ViewHolder> {
-
-
-    public interface OnItemClickedListener {
-        void onItemClicked(int position);
-    }
-
-    private OnItemClickedListener mListener ;
-
-    // 외부에서 연결하도록 listener로 정함.
-    public void setOnItemClickListener(OnItemClickedListener listener) {
-        this.mListener = listener;
-    }
 
     private Stack<Memo> mUndoStack;
 
@@ -47,7 +35,6 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         realm.close();
     }
 
-
     public void undo() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
@@ -59,6 +46,16 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         realm.close();
     }
 
+    public interface OnItemClickListener {
+        void onItemClicked(Memo item);
+    }
+
+    private OnItemClickListener mListener;
+
+    // 외부에서 연결하도록 listener로 정함.
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
 
     public MemoRecyclerAdapter(@Nullable OrderedRealmCollection<Memo> data) {
         super(data, true);
@@ -70,7 +67,15 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_memo, parent, false);
-        return new ViewHolder(view,mListener);
+
+        final ViewHolder viewHolder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClicked(getItem(viewHolder.getAdapterPosition()));
+            }
+        });
+        return viewHolder;
     }
 
     @Override
@@ -81,23 +86,18 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         holder.memo = memo;
     }
 
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView memoTextView;
         public Memo memo;
 
-       //item 하나에 대한 뷰가 itemview임. 여기에 이벤트를 건다..
-        public ViewHolder(View itemView, final OnItemClickedListener listener) {
+        //item 하나에 대한 뷰가 itemview임. 여기에 이벤트를 건다..
+        public ViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.text1);
             memoTextView = itemView.findViewById(R.id.text2);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClicked(getAdapterPosition());
-                }
-            });
+
         }
     }
 }
+

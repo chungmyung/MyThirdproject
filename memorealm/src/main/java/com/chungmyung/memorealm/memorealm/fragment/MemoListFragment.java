@@ -1,20 +1,19 @@
-package com.chungmyung.memorealm.activity.fragment;
+package com.chungmyung.memorealm.memorealm.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.chungmyung.memorealm.R;
-import com.chungmyung.memorealm.activity.Models.Memo;
-import com.chungmyung.memorealm.activity.adapter.MemoRecyclerAdapter;
+import com.chungmyung.memorealm.memorealm.Models.Memo;
+import com.chungmyung.memorealm.memorealm.activity.DetailActivity;
+import com.chungmyung.memorealm.memorealm.adapter.MemoRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +23,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 
-public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.OnItemClickedListener {
+public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -53,9 +52,10 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-       RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
-        animator.setAddDuration(3000);
-        mRecyclerView.setItemAnimator(animator);
+        // animation효과
+//       RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
+//        animator.setAddDuration(3000);
+//        mRecyclerView.setItemAnimator(animator);
 
 
         // Realm에서 데이터  읽어오기
@@ -69,7 +69,7 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         mRecyclerView.setAdapter(mAdapter);
 
         // 아래 줄치기..
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL)) ;
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL)) ;
 
     }
 
@@ -81,9 +81,15 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
     }
 
     @Override
-    public void onItemClicked(int position) {
-        Toast.makeText(getContext(), "" + position, Toast.LENGTH_SHORT).show();
+    public void onItemClicked(Memo memo) {
+        // 수정화면으로 이동.
 
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("id", memo.getId());
+        startActivity(intent);
+
+//        Toast.makeText(getContext(), "" + memo.toString(), Toast.LENGTH_SHORT).show();
+//        mRealm.beginTransaction();
+//        mRealm.commitTransaction();
     }
-
 }

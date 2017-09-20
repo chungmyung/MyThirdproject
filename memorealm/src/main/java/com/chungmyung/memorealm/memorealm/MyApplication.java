@@ -1,4 +1,4 @@
-package com.chungmyung.memorealm.activity;
+package com.chungmyung.memorealm.memorealm;
 
 import android.app.Application;
 

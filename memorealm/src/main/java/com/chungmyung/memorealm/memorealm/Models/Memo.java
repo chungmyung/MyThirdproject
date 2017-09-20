@@ -1,4 +1,4 @@
-package com.chungmyung.memorealm.activity.Models;
+package com.chungmyung.memorealm.memorealm.Models;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

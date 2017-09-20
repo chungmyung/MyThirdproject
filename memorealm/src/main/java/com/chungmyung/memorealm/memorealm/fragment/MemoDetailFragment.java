@@ -1,4 +1,4 @@
-package com.chungmyung.memorealm.activity.fragment;
+package com.chungmyung.memorealm.memorealm.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.chungmyung.memorealm.R;
-import com.chungmyung.memorealm.activity.Models.Memo;
+import com.chungmyung.memorealm.memorealm.Models.Memo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +48,8 @@ public class MemoDetailFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_memo_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
 
@@ -64,7 +64,8 @@ public class MemoDetailFragment extends Fragment {
 
     @OnClick(R.id.fab)
     public void onFabClicked() {
-//        mRealm.beginTransaction();
+
+        mRealm.beginTransaction();
 
         addMemo(mTitleEdit.getText().toString(),
                 mMemoEdit.getText().toString());
