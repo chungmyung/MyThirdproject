@@ -33,18 +33,18 @@ public class MemoDetailFragment extends Fragment {
 
     private Memo mMemo;
 
-//    public static final int MODE_ADD = 0;
-//    public static final int MODE_UPDATE = 1;
-//
-//    private int mMode = MODE_ADD;
+    public static final int MODE_ADD = 0;
+    public static final int MODE_UPDATE = 1;
+
+    private int mMode = MODE_ADD;
 
 
-//    public static MemoDetailFragment newInstance(Memo memo) {
-//        MemoDetailFragment fragment = new MemoDetailFragment();
-//        fragment.setMemo(memo);
-//        return fragment;
-//
-//    }
+    public static MemoDetailFragment newInstance(Memo memo) {
+        MemoDetailFragment fragment = new MemoDetailFragment();
+        fragment.setMemo(memo);
+        return fragment;
+
+    }
 
     @Nullable
     @Override
@@ -106,10 +106,11 @@ public class MemoDetailFragment extends Fragment {
         mRealm.close();
     }
 
-//    public void setMemo(Memo memo) {
-//        this.mMemo = memo;
-//        mMode = MODE_UPDATE;
-//    }
+
+    public void setMemo(Memo memo) {
+        this.mMemo = memo;
+        mMode = MODE_UPDATE;
+    }
 }
 
 
