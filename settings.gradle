@@ -1,1 +1,1 @@
-include ':app', ':memorealm', ':DbRealmExam'
+include ':app', ':memorealm', ':DbRealmExam', ':geofencing'
