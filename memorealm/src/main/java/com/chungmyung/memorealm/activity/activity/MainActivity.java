@@ -1,13 +1,17 @@
 package com.chungmyung.memorealm.activity.activity;
 
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.chungmyung.memorealm.R;
+import com.chungmyung.memorealm.activity.fragment.MemoListFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,22 +32,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        한번만 붙이겠다
-//        if (savedInstanceState == null) {
-//            addFragmentTransaction(new MemoListFragment());
-//        }
-//    }
-
-//    private void addFragmentTransaction(Fragment fragment) {
-//       getSupportFragmentManager().beginTransaction()
-//                .add(R.id.container, fragment)
-//                .commit();
-//    }
-//
-//    private void replaceFragmentTransaction(Fragment fragment) {
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.container, fragment)
-//                .commit();
-//    }
-
+        if (savedInstanceState == null) {
+            addFragmentTransaction(new MemoListFragment());
+        }
     }
+
+    private void addFragmentTransaction(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, fragment)
+                .commit();
+    }
+
+
+    private void replaceFragmentTransaction(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
 }
+

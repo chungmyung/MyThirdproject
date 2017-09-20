@@ -3,6 +3,7 @@ package com.chungmyung.memorealm.activity.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -37,7 +38,7 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmemt_memo_list, container, true);
+        View view = inflater.inflate(R.layout.fragmemt_memo_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         mRealm = Realm.getDefaultInstance();
 
@@ -53,6 +54,11 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+       RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
+        animator.setAddDuration(1000);
+        mRecyclerView.setItemAnimator(animator);
+
 
         // Realm에서 데이터  읽어오기
         RealmResults<Memo> data = mRealm.where(Memo.class).findAll();

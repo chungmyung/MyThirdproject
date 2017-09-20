@@ -36,7 +36,6 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
 
     private Stack<Memo> mUndoStack;
 
-
     public void delete(Memo memo) {
         Realm realm = Realm.getDefaultInstance();
         mUndoStack.push(realm.copyFromRealm(memo));
