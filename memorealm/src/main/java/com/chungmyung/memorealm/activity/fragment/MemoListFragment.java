@@ -43,8 +43,6 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         mRealm = Realm.getDefaultInstance();
 
         setUPRecyclerView();
-
-
         return view;
     }
 
@@ -87,4 +85,5 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         Toast.makeText(getContext(), "" + position, Toast.LENGTH_SHORT).show();
 
     }
+
 }
