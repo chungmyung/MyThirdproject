@@ -56,7 +56,7 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
        RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
-        animator.setAddDuration(1000);
+        animator.setAddDuration(3000);
         mRecyclerView.setItemAnimator(animator);
 
 
