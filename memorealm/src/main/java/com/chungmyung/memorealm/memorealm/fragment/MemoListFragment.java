@@ -85,7 +85,7 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         // 수정화면으로 이동.
 
         Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra("id", memo.getId());
+        intent.putExtra("id", memo.getId());  // 메모에 id만 보냈다.
         startActivity(intent);
 
 //        Toast.makeText(getContext(), "" + memo.toString(), Toast.LENGTH_SHORT).show();

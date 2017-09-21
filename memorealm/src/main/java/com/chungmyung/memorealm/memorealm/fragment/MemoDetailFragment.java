@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.chungmyung.memorealm.R;
 import com.chungmyung.memorealm.memorealm.Models.Memo;
@@ -17,6 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.Realm;
+
+import static com.chungmyung.memorealm.memorealm.Models.Memo.getNewId;
+
 
 public class MemoDetailFragment extends Fragment {
 
@@ -50,55 +54,45 @@ public class MemoDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_memo_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         mRealm = Realm.getDefaultInstance();
 
-        return view;
-//        if (mMode == MODE_UPDATE) {
-//            mTitleEdit.setText(mMemo.getTitle());
-//            mMemoEdit.setText(mMemo.getMemo());
+        if (mMode == MODE_UPDATE) {
+            mTitleEdit.setText(mMemo.getTitle());
+            mMemoEdit.setText(mMemo.getMemo());
         }
+        return view;
+    }
 
 
     @OnClick(R.id.fab)
     public void onFabClicked() {
-
         mRealm.beginTransaction();
 
-        addMemo(mTitleEdit.getText().toString(),
-                mMemoEdit.getText().toString());
+        try {
+            Memo memo = null;
+            if (mMode == MODE_ADD) {
+                // 추가할땐 새로 생성하고,
+                memo = mRealm.createObject(Memo.class, getNewId(mRealm));
 
-        getActivity().finish();
+            } else {
+                memo = mMemo;
+            }
+            // 넘어온 자료로 바꾸고,
+            memo.setTitle(mTitleEdit.getText().toString());
+            memo.setMemo(mMemoEdit.getText().toString());
+
+            mRealm.insertOrUpdate(memo);  //  바뀐자를 갖고  추가 든 업데이트를 들고
+            mRealm.commitTransaction();
+            getActivity().finish();
+        } catch (Exception e) {
+            mRealm.cancelTransaction();
+            Toast.makeText(getContext(), "에러", Toast.LENGTH_SHORT).show();
+        }
     }
-
-//        try {
-//            Memo memo = null;
-//            if (mMode == MODE_ADD) {
-//                memo = mRealm.createObject(Memo.class, getNewId(mRealm));
-//            } else {
-//                memo = mMemo;
-//            }
-//            memo.setTitle(mTitleEdit.getText().toString());
-//            memo.setMemo(mMemoEdit.getText().toString());
-//
-//            mRealm.insertOrUpdate(memo);
-//            mRealm.commitTransaction();
-//            getActivity().finish();
-//        } catch (Exception e) {
-//            mRealm.cancelTransaction();
-//            Toast.makeText(getContext(), "에러", Toast.LENGTH_SHORT).show();
-//        }
-     public void addMemo (String title, String memoText) {
-         mRealm.beginTransaction();
-         Memo memo = mRealm.createObject(Memo.class, Memo.getNewId(mRealm));
-         memo.setTitle(title);
-         memo.setMemo(memoText);
-         mRealm.commitTransaction();
-     }
-
-
 
     @Override
     public void onDestroyView() {
@@ -107,11 +101,11 @@ public class MemoDetailFragment extends Fragment {
         mRealm.close();
     }
 
-
     public void setMemo(Memo memo) {
         this.mMemo = memo;
         mMode = MODE_UPDATE;
     }
 }
+
 
 

@@ -20,11 +20,12 @@ public class DetailActivity extends AppCompatActivity {
         Memo memo = null;
         if (getIntent() != null) {
             int id = getIntent().getIntExtra("id", -1);
-
+            // 딴곳에서 안쓰고 여기서 만 Realm을 시니까.. 전역으로 하지 않고.
             Realm realm = Realm.getDefaultInstance();
-
+            // id가 하나인것을 찾아서 첫번째 것을 return해라...
             memo = realm.where(Memo.class).equalTo("id", id).findFirst();
-
+//            realm.beginTransaction();  읽어ㅇ오는 것은 beginTransaction으로 하지 않음.
+//              realm.commitTransaction(); 잘못된 코드... 위의 것과 같이..
             realm.close();
         }
         if (savedInstanceState == null) {
@@ -32,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
                 // 추가
                 addFragmentTransaction(new MemoDetailFragment());
             } else {
-                // 수정
+                // 수정 Instance가 없으니 DetailFragment에 가서 newInstance ()만든다.
                 addFragmentTransaction(MemoDetailFragment.newInstance(memo));
             }
         }

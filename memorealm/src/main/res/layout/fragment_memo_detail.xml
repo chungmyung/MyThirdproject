@@ -28,18 +28,17 @@
                 android:hint="memo" />
         </ScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:srcCompat="@drawable/ic_done_white_24dp"
-            android:backgroundTint="#ff00ff"
-            app:useCompatPadding="true"/>
 
     </LinearLayout>
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:srcCompat="@drawable/ic_done_white_24dp"
+        app:backgroundTint="#ff00ff"
+        app:useCompatPadding="true"/>
 
 
 </FrameLayout>
