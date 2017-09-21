@@ -88,6 +88,7 @@ public class MemoDetailFragment extends Fragment {
             mRealm.insertOrUpdate(memo);  //  바뀐자를 갖고  추가 든 업데이트를 들고
             mRealm.commitTransaction();
             getActivity().finish();
+
         } catch (Exception e) {
             mRealm.cancelTransaction();
             Toast.makeText(getContext(), "에러", Toast.LENGTH_SHORT).show();
