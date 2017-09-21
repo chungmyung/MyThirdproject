@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,20 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
 
         // Realm에서 데이터  읽어오기
         RealmResults<Memo> data = mRealm.where(Memo.class).findAll();
+
+        // 터치
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback() {
+          @Override
+          public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+              return false;
+          }
+
+          @Override
+          public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+          }
+      }) ;
+
 
         // 어뎁터에 데이터 설정
         mAdapter= new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
