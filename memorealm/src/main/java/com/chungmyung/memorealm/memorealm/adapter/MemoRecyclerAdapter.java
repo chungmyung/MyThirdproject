@@ -86,7 +86,7 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         holder.memo = memo;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView memoTextView;
         public Memo memo;

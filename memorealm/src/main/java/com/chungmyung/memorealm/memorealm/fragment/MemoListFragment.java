@@ -30,9 +30,8 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
     RecyclerView mRecyclerView;
     Unbinder unbinder;
 
-    private Realm mRealm ;
-    private MemoRecyclerAdapter mAdapter ;
-
+    private Realm mRealm;
+    private MemoRecyclerAdapter mAdapter;
 
 
     @Nullable
@@ -49,7 +48,7 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
     private void setUPRecyclerView() {
 
         //리사클러 뷰 레이아웃 매니저
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -63,21 +62,32 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
         RealmResults<Memo> data = mRealm.where(Memo.class).findAll();
 
         // 터치
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback() {
-          @Override
-          public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-              return false;
-          }
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.UP | ItemTouchHelper.DOWN) |
+                        makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            }
 
-          @Override
-          public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-          }
-      }) ;
-
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                if (direction == ItemTouchHelper.LEFT) {
+                    mRealm.beginTransaction();
+                    Memo memo = ((MemoRecyclerAdapter.ViewHolder) viewHolder).memo;
+                    memo.deleteFromRealm();
+                    mRealm.commitTransaction();
+                }
+            }
+        });
+        touchHelper.attachToRecyclerView(mRecyclerView);
 
         // 어뎁터에 데이터 설정
-        mAdapter= new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
+        mAdapter = new MemoRecyclerAdapter(data.sort("id", Sort.DESCENDING));
 
         //ㄱ클릭 이벤트
         mAdapter.setOnItemClickListener(this);
