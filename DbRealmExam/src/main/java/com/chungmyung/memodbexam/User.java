@@ -12,6 +12,9 @@ public class User extends RealmObject {
 
     // 반드시 빈생성자 있어야 함.
 
+
+
+
     public String getEmail() {
         return email;
     }

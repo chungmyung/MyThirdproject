@@ -19,6 +19,7 @@ public class MyApplication extends Application {
         RealmConfiguration.Builder config = new RealmConfiguration.Builder();
         // 스키마가 변경되면 다 지우고 다시 가자..
         config.deleteRealmIfMigrationNeeded();
+
         Realm.setDefaultConfiguration(config.build());
     }
 }
