@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mResultText;
 
     private Realm mRealm;
-//    private RealmAsyncTask mTransaction;
+    private RealmAsyncTask mTransaction;
 
 
     @Override
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteAccount(View view) {
-          mRealm.executeTransaction(new Realm.Transaction() {
+        //삭제
+        mTransaction =  mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 User user = mRealm.where(User.class)
@@ -100,13 +102,24 @@ public class MainActivity extends AppCompatActivity {
                     //삭제
                     user.deleteFromRealm();
                 }
-                showResult();
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Toast.makeText(MainActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void showResult() {
-        RealmResults<User>  user = mRealm.where(User.class).findAll();
+
+        RealmResults<User> user = mRealm.where(User.class).findAll();
         mResultText.setText(user.toString());
 
     }
@@ -116,5 +129,13 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         mRealm.close();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mTransaction != null & !mTransaction.isCancelled()) {
+            mTransaction.cancel();
+        }
     }
 }
