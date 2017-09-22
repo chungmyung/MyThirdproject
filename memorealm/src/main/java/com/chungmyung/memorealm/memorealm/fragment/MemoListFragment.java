@@ -3,6 +3,7 @@ package com.chungmyung.memorealm.memorealm.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -77,13 +78,23 @@ public class MemoListFragment extends Fragment implements MemoRecyclerAdapter.On
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    mRealm.beginTransaction();
                     Memo memo = ((MemoRecyclerAdapter.ViewHolder) viewHolder).memo;
-                    memo.deleteFromRealm();
-                    mRealm.commitTransaction();
+                    mAdapter.delete(memo);
+
+                    Snackbar.make(viewHolder.itemView, "삭제되었습니다.", Snackbar.LENGTH_LONG)
+                            .setAction("취소되었습니다.", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+//                          // 취소
+                                    mAdapter.undo();
+
+                                }
+                            }).show();
+
                 }
             }
         });
+
         touchHelper.attachToRecyclerView(mRecyclerView);
 
         // 어뎁터에 데이터 설정

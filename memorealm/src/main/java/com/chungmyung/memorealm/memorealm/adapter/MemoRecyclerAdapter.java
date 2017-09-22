@@ -24,6 +24,15 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
 
     private Stack<Memo> mUndoStack;
 
+    public void pendingMemoDelete(Memo memo) {
+        Realm realm = Realm.getDefaultInstance();
+        mUndoStack.push(realm.copyFromRealm(memo));
+        realm.beginTransaction();
+        memo.deleteFromRealm();
+        realm.commitTransaction();
+        realm.close();
+    }
+
     public void delete(Memo memo) {
         Realm realm = Realm.getDefaultInstance();
         mUndoStack.push(realm.copyFromRealm(memo));
@@ -39,12 +48,13 @@ public class MemoRecyclerAdapter extends RealmRecyclerViewAdapter<Memo, MemoRecy
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-        Memo memo = mUndoStack.pop();
+        Memo memo = mUndoStack.pop();  // 메모 꺼내기
         realm.insert(memo);
 
         realm.commitTransaction();
         realm.close();
     }
+
 
     public interface OnItemClickListener {
         void onItemClicked(Memo item);
