@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     TextView mResultText;
 
     private UserDbHelper mDbHelper;
+    private Thread mThread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,29 +34,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mDbHelper = new UserDbHelper(this);
+        mDbHelper = UserDbHelper.getInstance(this);
 
         showResult();
 
     }
 
     public void SignUp() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        try {
 
-        ContentValues values = new ContentValues();
-        values.put(UserContract.UserEntry.COLUMN_NAME_EMAL, mEmailEdit.getText().toString());
-        values.put(UserContract.UserEntry.CONLUMN_NAME_PASSWORD, mPasswordEdit.getText().toString());
+            mThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
 
-        long newId = db.insert(UserContract.UserEntry.TABLE_NAME,
-                null,
-                values);
+                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        if (newId == -1) {
-            Toast.makeText(this, "에러", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "가입됨", Toast.LENGTH_SHORT).show();
-            showResult();
+                    ContentValues values = new ContentValues();
+                    values.put(UserContract.UserEntry.COLUMN_NAME_EMAL, mEmailEdit.getText().toString());
+                    values.put(UserContract.UserEntry.CONLUMN_NAME_PASSWORD, mPasswordEdit.getText().toString());
+
+                    long newId = db.insert(UserContract.UserEntry.TABLE_NAME,
+                            null,
+                            values);
+
+                    if (newId == -1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "가입됨", Toast.LENGTH_SHORT).show();
+                                showResult();
+                            }
+                        });
+                    }
+                }
+            });
+        } catch (Exception e) {
         }
+        mThread.start();
     }
 
 
@@ -104,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
         int count = db.delete(UserContract.UserEntry.TABLE_NAME,
                 UserContract.UserEntry.COLUMN_NAME_EMAL + " ='"
                         + mEmailEdit.getText().toString() + " ' AND "
-                        + UserContract.UserEntry.CONLUMN_NAME_PASSWORD +  " ='"
+                        + UserContract.UserEntry.CONLUMN_NAME_PASSWORD + " ='"
                         + mPasswordEdit.getText().toString() + " ' ",
-                null );    // 이것도 삭제된 수를 리턴)
+                null);    // 이것도 삭제된 수를 리턴)
 
 
         if (count > 0) {
@@ -114,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             showResult();
         }
     }
-
 
 
     public void showResult() {
@@ -145,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        if (mThread != null && mThread.isAlive()) {
+            mThread.interrupt();
+        }
 
     }
 
