@@ -61,15 +61,17 @@ public class MainActivity extends AppCompatActivity {
     public void SignIn(View view) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Cursor cursor = db.query(UserContract.UserEntry.TABLE_NAME,
-                null,
-                UserContract.UserEntry.COLUMN_NAME_EMAL + "='"
-                        + mEmailEdit.getText().toString() + "'AND"
-                        + UserContract.UserEntry.CONLUMN_NAME_PASSWORD + "='"
-                        + mPasswordEdit.getText().toString() + "'",
-                null,
+                null,  // columns..
+                UserContract.UserEntry.COLUMN_NAME_EMAL + "= '"
+                    + mEmailEdit.getText().toString() + " ' AND"
+                    + UserContract.UserEntry.CONLUMN_NAME_PASSWORD + "= '"
+                +  mPasswordEdit.getText().toString() + " ' ",
+                  // where
+                null, // selection args
                 null,
                 null,
                 null);
+
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show();
@@ -101,14 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (cursor != null) {
             StringBuilder stringBuilder = new StringBuilder();  //비동기에 Threadstable
-            cursor.moveToFirst();  // 맨앞의 앞자료 갖고 오이 위해 -1.
+            cursor.moveToFirst();  // 맨앞의 앞자료 -1.
             while (cursor.moveToNext()) {
                 String email = cursor.getString(cursor.getColumnIndexOrThrow(UserContract.UserEntry.COLUMN_NAME_EMAL));
                 String password = cursor.getString(cursor.getColumnIndexOrThrow(UserContract.UserEntry.CONLUMN_NAME_PASSWORD));
 
                 stringBuilder.append(email).append(",").append(password).append("\n");
             }
-            mResultText.setText(cursor.toString());
+            mResultText.setText(stringBuilder.toString());
         }
         cursor.close();
     }
