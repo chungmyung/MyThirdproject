@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" filepath="$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" filepath="$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyThirdproject.iml" filepath="$PROJECT_DIR$/MyThirdproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/geofencing/geofencing.iml" filepath="$PROJECT_DIR$/geofencing/geofencing.iml" />
