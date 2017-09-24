@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.query(UserContract.UserEntry.TABLE_NAME,
                 null,  // columns..
                 UserContract.UserEntry.COLUMN_NAME_EMAL + "= '"
-                    + mEmailEdit.getText().toString() + " ' AND"
-                    + UserContract.UserEntry.CONLUMN_NAME_PASSWORD + "= '"
-                +  mPasswordEdit.getText().toString() + " ' ",
-                  // where
+                        + mEmailEdit.getText().toString() + " ' AND"
+                        + UserContract.UserEntry.CONLUMN_NAME_PASSWORD + "= '"
+                        + mPasswordEdit.getText().toString() + " ' ",
+                // where
                 null, // selection args
                 null,
                 null,
@@ -84,11 +84,38 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void UpdatePassword() {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UserContract.UserEntry.CONLUMN_NAME_PASSWORD, mNewPasswordEdit.getText().toString());
+
+        int count = db.update(UserContract.UserEntry.TABLE_NAME,
+                values,
+                UserContract.UserEntry.COLUMN_NAME_EMAL + " = ? ",
+                new String[]{mEmailEdit.getText().toString()});
+
+        if (count > 0) {
+            showResult();
+        }
     }
 
     public void deleteAccount(View view) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int count = db.delete(UserContract.UserEntry.TABLE_NAME,
+                UserContract.UserEntry.COLUMN_NAME_EMAL + " ='"
+                        + mEmailEdit.getText().toString() + " ' AND "
+                        + UserContract.UserEntry.CONLUMN_NAME_PASSWORD +  " ='"
+                        + mPasswordEdit.getText().toString() + " ' ",
+                null );    // 이것도 삭제된 수를 리턴)
 
+
+        if (count > 0) {
+            Toast.makeText(this, "삭제", Toast.LENGTH_SHORT).show();
+            showResult();
+        }
     }
+
+
 
     public void showResult() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();  // 불러올수 있는 것 다 갖고 오기.
