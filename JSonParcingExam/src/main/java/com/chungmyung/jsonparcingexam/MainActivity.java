@@ -6,6 +6,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chungmyung.jsonparcingexam.Models.Location;
+import com.chungmyung.jsonparcingexam.Models.Weather;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -57,5 +62,25 @@ public class MainActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void requestWeather(View view) {
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        mApiService.getWeather().enqueue(new Callback<List<Weather>>() {
+             @Override
+              public void onResponse(Call<List<Weather>> call, Response<List<Weather>> response) {
+                 mResultText.setText(response.body().toString());  //  결과를 뿌리면 된다...  butterknife설치
+                 mProgressBar.setVisibility(View.GONE);
+             }
+
+             @Override
+             public void onFailure(Call<List<Weather>> call, Throwable t) {
+                mResultText.setText(t.getLocalizedMessage()); // 실패하면 이곳이 뿌린다.
+                mProgressBar.setVisibility(View.GONE);
+
+             }
+            }
+        );
     }
 }

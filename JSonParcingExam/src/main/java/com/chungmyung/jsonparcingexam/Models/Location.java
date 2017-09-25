@@ -1,4 +1,4 @@
-package com.chungmyung.jsonparcingexam;
+package com.chungmyung.jsonparcingexam.Models;
 
 /**
  * Created by user on 2017-09-25.
