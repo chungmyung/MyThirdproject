@@ -93,9 +93,9 @@ public class CurrentWeatherFragment extends Fragment {
         mWeatherUtil.getApiService().getCurrentWeather(cityName).enqueue(new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
-                CurrentWeather currentWeather = response.body();
 
-                mCityEditText.setText("기온" + currentWeather.getMain().getTemp());
+                CurrentWeather currentWeather = response.body();
+                mTempTextView.setText("현재기온" + currentWeather.getMain().getTemp());
                 mPressureTextView.setText("기압" + currentWeather.getMain().getPressure());
                 mHumidityTextView.setText("습도" + currentWeather.getMain().getHumidity());
                 mMinTempTextView.setText("최저 기온" + currentWeather.getMain().getTempMin());
