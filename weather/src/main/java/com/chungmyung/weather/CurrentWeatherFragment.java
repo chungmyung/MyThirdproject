@@ -77,7 +77,7 @@ public class CurrentWeatherFragment extends Fragment {
 
         InputMethodManager inputMethodManger;
         inputMethodManger = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) ;
-        inputMethodManger.hideSoftInputFromInputMethod( mCityEditText.getWindowToken()) ;
+        inputMethodManger.hideSoftInputFromInputMethod( mCityEditText.getWindowToken(),0);
     }
 
     @Override
