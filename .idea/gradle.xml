@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/geofencing" />
             <option value="$PROJECT_DIR$/memorealm" />
+            <option value="$PROJECT_DIR$/weather" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

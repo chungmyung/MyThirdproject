@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Location> call, Response<Location> response) {
                 mResultText.setText(response.body().toString());  //  결과를 뿌리면 된다...  butterknife설치
                 mProgressBar.setVisibility(View.GONE);
-
             }
 
             //실패했을 때 오는 곳
