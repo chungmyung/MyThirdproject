@@ -1,5 +1,5 @@
 
-package com.chungmyung.weather.models;
+package com.chungmyung.weather.models.models.models.current;
 
 
 public class Weather {

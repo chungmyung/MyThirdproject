@@ -1,6 +1,7 @@
 package com.chungmyung.weather.retrofit;
 
-import com.chungmyung.weather.models.CurrentWeather;
+import com.chungmyung.weather.models.models.models.current.CurrentWeather;
+import com.chungmyung.weather.models.models.models.forecast.ForecastWeather;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,4 +20,6 @@ public interface WeatherAPI {
     @GET("weather?lang=kr&units=metric&appid="+APP_ID)
     Call<CurrentWeather> getCurrentWeather(@Query("q") String cityName);
 
+    @GET("forecast?lang=kr&units=metric&appid="+APP_ID)
+    Call<ForecastWeather> getForecastWeather(@Query("q") String cityName);
 }

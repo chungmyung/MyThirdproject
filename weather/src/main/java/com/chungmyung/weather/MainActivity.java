@@ -20,21 +20,28 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.setAdapter(new MypagerAdapter(getSupportFragmentManager()));
     }
-private static class MypagerAdapter extends FragmentPagerAdapter {
 
-    public MypagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
+    private static class MypagerAdapter extends FragmentPagerAdapter {
 
-    @Override
-    public Fragment getItem(int position) {
-        return new CurrentWeatherFragment();
-    }
+        public MypagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    @Override
-    public int getCount() {
-        return 1;
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new CurrentWeatherFragment();
+                case 1 :
+                    return new ForecastWeatherFragment();
+            }
+            return  null;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
-}
 
 }
