@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DbFirebaseExam/DbFirebaseExam.iml" filepath="$PROJECT_DIR$/DbFirebaseExam/DbFirebaseExam.iml" />
       <module fileurl="file://$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" filepath="$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" />
       <module fileurl="file://$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" filepath="$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" />
       <module fileurl="file://$PROJECT_DIR$/JSonParcingExam/JSonParcingExam.iml" filepath="$PROJECT_DIR$/JSonParcingExam/JSonParcingExam.iml" />

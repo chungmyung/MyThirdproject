@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DbFirebaseExam" />
             <option value="$PROJECT_DIR$/DbRealmExam" />
             <option value="$PROJECT_DIR$/DbSQLiteexam" />
             <option value="$PROJECT_DIR$/JSonParcingExam" />

@@ -44,6 +44,8 @@ public class CurrentWeatherFragment extends Fragment {
     TextView mMaxTempTextView;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
+    @BindView(R.id.city_text_view)
+    TextView mCityTextView;
     Unbinder unbinder;
 
     private WeatherUtil mWeatherUtil;
@@ -76,8 +78,8 @@ public class CurrentWeatherFragment extends Fragment {
     private void dismissKeyboard() {
 
         InputMethodManager inputMethodManger;
-        inputMethodManger = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) ;
-        inputMethodManger.hideSoftInputFromInputMethod( mCityEditText.getWindowToken(),0);
+        inputMethodManger = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManger.hideSoftInputFromInputMethod(mCityEditText.getWindowToken(), 0);
     }
 
     @Override
@@ -95,11 +97,13 @@ public class CurrentWeatherFragment extends Fragment {
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
 
                 CurrentWeather currentWeather = response.body();
-                mTempTextView.setText("현재기온" + currentWeather.getMain().getTemp());
-                mPressureTextView.setText("기압" + currentWeather.getMain().getPressure());
-                mHumidityTextView.setText("습도" + currentWeather.getMain().getHumidity());
-                mMinTempTextView.setText("최저 기온" + currentWeather.getMain().getTempMin());
-                mMaxTempTextView.setText("최고 기온" + currentWeather.getMain().getTempMax());
+                mTempTextView.setText("현재기온 :  " + currentWeather.getMain().getTemp());
+                mPressureTextView.setText("기압  :  " + currentWeather.getMain().getPressure());
+                mHumidityTextView.setText("습도  :  " + currentWeather.getMain().getHumidity());
+                mMinTempTextView.setText("최저 기온  :  " + currentWeather.getMain().getTempMin());
+                mMaxTempTextView.setText("최고 기온  :  " + currentWeather.getMain().getTempMax());
+
+                mCityTextView.setText("지역   :   " + currentWeather.getName());
 
                 mProgressBar.setVisibility(View.GONE);
             }

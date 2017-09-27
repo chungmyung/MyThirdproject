@@ -1,1 +1,1 @@
-include ':app', ':memorealm', ':DbRealmExam', ':geofencing', ':DbSQLiteexam', ':animation', ':JSonParcingExam', ':weather'
+include ':app', ':memorealm', ':DbRealmExam', ':geofencing', ':DbSQLiteexam', ':animation', ':JSonParcingExam', ':weather', ':DbFirebaseExam'
