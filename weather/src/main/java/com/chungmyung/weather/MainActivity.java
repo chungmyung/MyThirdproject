@@ -34,13 +34,27 @@ public class MainActivity extends AppCompatActivity {
                     return new CurrentWeatherFragment();
                 case 1 :
                     return new ForecastWeatherFragment();
+                case 2 :
+                    return new ForecasFragment();
             }
             return  null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
+        }
+        @Override
+        public CharSequence getPageTitle(int position){
+            switch (position) {
+                case 0 :
+                    return "현재 날씨";
+                case 1 :
+                    return "예보 날씨";
+                case 2 :
+                    return  "리스트 뷰" ;
+            }
+            return  null ;
         }
     }
 
