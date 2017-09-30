@@ -2,14 +2,19 @@ package com.chungmyung.map;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -22,13 +27,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final int REQUEST_CODE_LOCATION_PERMISSION = 1000;
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
+
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
+
+    private Geocoder mGeocoder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +53,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        mGeocoder = new Geocoder(this, Locale.getDefault());
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         createLocationRequest();
@@ -46,12 +62,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
+
                 Toast.makeText(MapsActivity.this, "갱신되었음.!", Toast.LENGTH_SHORT).show();
-                for (Location location : locationResult.getLocations())
+                for (Location location : locationResult.getLocations()) {
+                    try {
+                        List<Address> locations = mGeocoder.getFromLocation(location.getLatitude(),
+                                location.getLongitude(), 10);  // 주소를 10개 까지 보여 줄수 있다...
+
+                        StringBuilder stringBuilder = new StringBuilder();
+                        Address address = locations.get(0);
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                            stringBuilder.append(address.getAddressLine(i));
+                        }
+                        Log.d(TAG, "onLocationResult ; " + stringBuilder.toString());
+
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                                .title(stringBuilder.toString()));
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     // Update UI with location data
                     mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(location.getLatitude(), location.getLongitude())));
 
+                }
             }
         };
         getLastLocation();
@@ -63,13 +99,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
 
             // 권한 요청
             ActivityCompat.requestPermissions(this,
@@ -117,15 +146,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
         // Add a marker in Sydney and move the camera
-        LatLng chomackgol = new LatLng(37.3536153, 126.91856459999997);
-        mMap.addMarker(new MarkerOptions().position(chomackgol).title("초막골생태공원"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(chomackgol));
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+
+        LatLng tokyo = new LatLng(35.7090259, 139.73199249999993);
+
+        try {
+            List<Address> locations = mGeocoder.getFromLocation(tokyo.latitude, tokyo.longitude, 1);  // 주소를 10개 까지 보여 줄수 있다...
+
+            String address = "";
+
+            for (int i = 0; i < locations.get(0).getMaxAddressLineIndex(); i++) {
+                address += locations.get(0).getAddressLine(i);
+            }
+
+            mMap.addMarker(new MarkerOptions().position(tokyo).title(address));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Update UI with location data
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(location.getLatitude(), location.getLongitude())));
+
 
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chomackgol, 15.0f));
 //        CameraUpdateFactory.zoomTo(6.0f);
+
+
     }
+
 
     @Override
     protected void onResume() {
@@ -145,7 +196,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             return;
         }
-
 
         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
                 mLocationCallback,
@@ -169,5 +219,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
+
+    private GeofencingRequest getGeofencingRequest() {
+        Geofence geofence = new Geofence.Builder()
+                // Set the request ID of the geofence. This is a string to identify this
+                // geofence.
+                .setRequestId("학원")
+                .setCircularRegion(
+                        37.274105,
+                        127.02262100000007,
+                        50  // 반경
+                )
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                        Geofence.GEOFENCE_TRANSITION_EXIT)
+                .build();
+
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.addGeofence(geofence);
+        return builder.build();
+    }
+
 }
 
