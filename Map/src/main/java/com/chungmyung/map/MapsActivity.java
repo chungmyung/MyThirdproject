@@ -21,8 +21,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);  // this늘 콜백..
-    }
+        mapFragment.getMapAsync(this);
+}
 
 
     /**
@@ -43,16 +43,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+        // Add a marker in Sydney and move the camera
+        LatLng youngTong = new LatLng(37.260407,127.07674599999996);
+        mMap.addMarker(new MarkerOptions().position(youngTong).title("청명고등학교"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(youngTong));
 
-        LatLng suwonApp = new LatLng(37.274105,127.02262100000007);
-        mMap.addMarker(new MarkerOptions().position(suwonApp).title("수원스마트앱"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(suwonApp));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(youngTong, 17.0f));
+        CameraUpdateFactory.zoomTo(6.0f);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suwonApp, 19.0f));
+        // Add a marker in Sydney and move the camera
+        LatLng chomackgol = new LatLng(37.3536153,126.91856459999997);
+        mMap.addMarker(new MarkerOptions().position(chomackgol).title("초막골생태공원"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(chomackgol));
 
-
-
-
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chomackgol, 15.0f));
+        CameraUpdateFactory.zoomTo(6.0f);
     }
 }
