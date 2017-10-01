@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
@@ -43,6 +45,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Geocoder mGeocoder;
 
+    private GeofencingClient mGeofencingClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        mGeofencingClient = LocationServices.getGeofencingClient(this);
+
         mGeocoder = new Geocoder(this, Locale.getDefault());
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //권한이 없으면
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // 권한 요청
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION);
+
+            return;
+        }
+        mGeofencingClient.addGeofences(getGeofencingRequest(), null)
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
 
         createLocationRequest();
 
@@ -84,8 +118,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         e.printStackTrace();
                     }
                     // Update UI with location data
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(location.getLatitude(), location.getLongitude())));
+//                    mMap.addMarker(new MarkerOptions()
+//                            .position(new LatLng(location.getLatitude(), location.getLongitude())));
 
                 }
             }
@@ -173,8 +207,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chomackgol, 15.0f));
 //        CameraUpdateFactory.zoomTo(6.0f);
-
-
     }
 
 
@@ -224,11 +256,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Geofence geofence = new Geofence.Builder()
                 // Set the request ID of the geofence. This is a string to identify this
                 // geofence.
-                .setRequestId("학원")
+                .setRequestId("청명역")
                 .setCircularRegion(
-                        37.274105,
-                        127.02262100000007,
-                        50  // 반경
+                        37.2597007,
+                        1127.07882970000003,
+                        50  // 반경meter
                 )
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
