@@ -8,8 +8,17 @@ import android.util.Log;
 public class MyService extends Service {
     private static final String TAG = MyService.class.getSimpleName();
 
-    public MyService() {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public MyService() {
     }
 
     @Override
@@ -21,7 +30,7 @@ public class MyService extends Service {
                 for (int i = 0; i < 10; i++) {
                     try {
                         Thread.sleep(1000);
-                        Log.d(TAG, "onStartCommand : " + i);
+                        Log.d(TAG, "MyIntentService : " + i);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
