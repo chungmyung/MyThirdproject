@@ -40,7 +40,6 @@ public class MyIntentService extends IntentService {
                 e.printStackTrace();
             }
         }
-
     }
 
 
