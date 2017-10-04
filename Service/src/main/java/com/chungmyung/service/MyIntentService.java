@@ -32,14 +32,14 @@ public class MyIntentService extends IntentService {
             try {
                 Thread.sleep(1000);
                 Log.d(TAG, "onStartCommand : " + i);
+
+                if (mCallback != null){
+                    mCallback.onCallback(i);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
-    }
-
-    public void setCallback(MainActivity mainActivity) {
 
     }
 
@@ -68,6 +68,6 @@ public class MyIntentService extends IntentService {
     IServiceCallback mCallback;
 
     public void setCallback(IServiceCallback callback) {
-        mCallback = callback ;
+        mCallback = callback ;    }
+
     }
-}
