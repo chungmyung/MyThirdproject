@@ -12,13 +12,14 @@ import android.widget.Toast;
 
 import static android.R.attr.value;
 
-public class MainActivity extends AppCompatActivity implements MyService.IServiceCallback {
+public class MainActivity extends AppCompatActivity implements MyService.IServiceCallback, MyIntentService.IServiceCallback {
 
     private Intent mServiceIntent;
-    private MyService mMyService;
+    private MyIntentService mMyService;
     private boolean mBound;  // 초기는 false./
 
     private ServiceConnection mServiceConnetion;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
     }
 
     public void onBindtService(View view) {
-        Intent service = new Intent(this, MyService.class);
+        Intent service = new Intent(this, MyIntentService.class);
         mServiceConnetion = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                mMyService = ((MyService.MyBinder) service).getService();
+                mMyService = ((MyIntentService.MyBinder) service).getService();
                 mMyService.setCallback(MainActivity.this);
                 mBound = true;
             }
@@ -68,13 +69,14 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
 
     public void getValue(View view) {
         if (mBound) {
+
             Toast.makeText(mMyService, mMyService.getValue() + " ", Toast.LENGTH_SHORT).show();
         }
     }
 
     @WorkerThread
     @Override
-    public void onCallback(int Value) {
+    public void onCallback(final int Value) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
