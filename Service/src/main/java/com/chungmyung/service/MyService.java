@@ -32,6 +32,7 @@ public class MyService extends Service {
     @MainThread
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
+        // workerThread...
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -39,6 +40,10 @@ public class MyService extends Service {
                     try {
                         Thread.sleep(1000);
                         Log.d(TAG, "onStartCommand : " + i);
+                        if (mCallback != null) {
+                            mCallback.onCallback(i);
+                        }
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -55,9 +60,7 @@ public class MyService extends Service {
         return mBinder;
     }
 
-//    public void setCallback(MainActivity callback) {
-//        mCallback = (IServiceCallback) callback;
-//    }
+
 
     public class MyBinder extends Binder {
         public MyService getService() {
@@ -75,5 +78,8 @@ public class MyService extends Service {
 
     IServiceCallback mCallback;
 
+    public void setCallback(IServiceCallback callback) {
+        mCallback = callback ;
+    }
 
 }
