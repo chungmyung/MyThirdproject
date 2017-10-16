@@ -15,10 +15,43 @@ import static android.R.attr.value;
 public class MainActivity extends AppCompatActivity implements MyService.IServiceCallback, MyIntentService.IServiceCallback {
 
     private Intent mServiceIntent;
-    private MyIntentService mMyService;
-    private boolean mBound;  // 초기는 false./
+    private MyService mMyService;
+    private MyIntentService mMyIntentService;
 
-    private ServiceConnection mServiceConnetion;
+    private boolean mMyServiceBound;  // 초기는 false./
+    private boolean mMyIntentServiceBound;  // 초기는 false./
+
+    private ServiceConnection mMyServiceConnetion = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mMyService = ((MyService.MyBinder) service).getService();
+            mMyService.setCallback(MainActivity.this);
+            mMyServiceBound = true;
+
+            Toast.makeText(MainActivity.this, "MyService 바인드 됨", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mMyServiceBound = false;
+        }
+    };
+
+    private ServiceConnection mMyIntentServiceConnetion = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mMyIntentService = ((MyIntentService.MyIntentServiceBinder) service).getService();
+            mMyIntentService.setCallback(MainActivity.this);
+            mMyIntentServiceBound = true;
+
+            Toast.makeText(MainActivity.this, "MyIntentService 바인드됨.  ", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mMyServiceBound = false;
+        }
+    };
 
 
     @Override
@@ -30,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
     public void ServiceStart(View view) {
         mServiceIntent = new Intent(this, MyService.class);
         startService(mServiceIntent);
-   // 종료..
+        // 종료..
         stopService(mServiceIntent);
     }
 
@@ -39,22 +72,9 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
         startService(service);
     }
 
-    public void onBindtService(View view) {
+    public void onBindtMyService(View view) {
         Intent service = new Intent(this, MyIntentService.class);
-        mServiceConnetion = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mMyService = ((MyIntentService.MyBinder) service).getService();
-                mMyService.setCallback(MainActivity.this);
-                mBound = true;
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                mBound = false;
-            }
-        };
-        bindService(service, mServiceConnetion, BIND_AUTO_CREATE);  // 서비스를 create 동시에 Bind하라..
+        bindService(service, mMyServiceConnetion, BIND_AUTO_CREATE);  // 서비스를 create 동시에 Bind하라..
     }
 
 
@@ -62,15 +82,20 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mBound) {
-            unbindService(mServiceConnetion);  // 인자는 connetion객체...
+        if (mMyServiceBound) {
+            unbindService(mMyServiceConnetion);  // 인자는 connetion객체...
+        }
+        if (mMyIntentServiceBound) {
+            unbindService(mMyIntentServiceConnetion);  // 인자는 connetion객체...
         }
     }
 
     public void getValue(View view) {
-        if (mBound) {
-
-            Toast.makeText(mMyService, mMyService.getValue() + " ", Toast.LENGTH_SHORT).show();
+        if (mMyServiceBound) {
+            Toast.makeText(mMyService, "MyServie ; " + mMyService.getValue(), Toast.LENGTH_SHORT).show();
+        }
+        if (mMyIntentServiceBound) {
+            Toast.makeText(mMyIntentService, "MyIntentServie ; " + mMyIntentService.getValue(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -80,11 +105,10 @@ public class MainActivity extends AppCompatActivity implements MyService.IServic
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-        Toast.makeText(MainActivity.this, " "+ value  , Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, " " + value, Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
 
 }

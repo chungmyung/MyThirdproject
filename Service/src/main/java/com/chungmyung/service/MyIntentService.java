@@ -27,7 +27,6 @@ public class MyIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
         for ( i = 0; i < 10; i++) {
             try {
                 Thread.sleep(1000);
@@ -40,10 +39,11 @@ public class MyIntentService extends IntentService {
                 e.printStackTrace();
             }
         }
+
     }
 
 
-    public class MyBinder extends Binder {
+    public class MyIntentServiceBinder extends Binder {
         public MyIntentService getService() {
             return MyIntentService.this;
         }
@@ -52,7 +52,7 @@ public class MyIntentService extends IntentService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return new MyBinder() ;
+        return new MyIntentServiceBinder() ;
     }
 
 

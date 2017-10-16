@@ -40,7 +40,6 @@ public class MyService extends Service {
                     try {
                         Thread.sleep(1000);
                         Log.d(TAG, "onStartCommand : " + i);
-
                         if (mCallback != null) {
                             mCallback.onCallback(i);
                         }
