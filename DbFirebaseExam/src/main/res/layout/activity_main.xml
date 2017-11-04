@@ -24,32 +24,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="SignIn"
-        android:text="로그인" />
+        android:text="@string/login" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="SignUp"
-        android:text="가입" />
+        android:text="@string/signin" />
 
 
     <EditText
         android:id="@+id/new_password_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="수정할 비밀번호" />
+        android:hint="@string/PWtobeupdated" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="updatePassword"
-        android:text="비번 수정" />
+        android:text="@string/UpdatePW" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="deleteAccount"
-        android:text="탈퇴" />
+        android:text="@string/Unregist" />
 
     <TextView
         android:id="@+id/result_text"
@@ -59,3 +59,4 @@
 
 
 </LinearLayout>
+

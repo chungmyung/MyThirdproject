@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyMusicService mService;
     boolean mBound = false;
 
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        mPlayButton.setOnClickListener(this);
 
         //  runtime 권한 체크
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,

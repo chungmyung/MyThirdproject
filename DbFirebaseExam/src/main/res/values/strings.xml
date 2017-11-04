@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DbFirebaseExam</string>
+    <string name="Unregist">탈퇴</string>
+    <string name="UpdatePW">비번 수정</string>
+    <string name="PWtobeupdated">수정할 비밀번호</string>
+    <string name="signin">가입</string>
+    <string name="login">로그인</string>
 </resources>

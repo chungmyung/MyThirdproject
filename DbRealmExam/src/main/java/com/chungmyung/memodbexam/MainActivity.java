@@ -38,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void SignUp() {
+    public void SignUp(View view) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
                 //추가.
                 User user = realm.createObject(User.class);
                 user.setEmail(mEmailEdit.getText().toString());
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void SignIn() {
+    public void SignIn(View view) {
         User user = mRealm.where(User.class)
                 .equalTo("email", mEmailEdit.getText().toString())
                 .equalTo("password", mPasswordEdit.getText().toString())
@@ -66,12 +65,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
-    public void UpdatePassword() {
-
+    public void UpdatePassword(View view) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -138,4 +134,8 @@ public class MainActivity extends AppCompatActivity {
             mTransaction.cancel();
         }
     }
-}
+
+    }
+
+
+

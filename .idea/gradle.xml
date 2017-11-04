@@ -8,18 +8,20 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Customview" />
             <option value="$PROJECT_DIR$/DbFirebaseExam" />
             <option value="$PROJECT_DIR$/DbRealmExam" />
             <option value="$PROJECT_DIR$/DbSQLiteexam" />
+            <option value="$PROJECT_DIR$/Geofence" />
             <option value="$PROJECT_DIR$/JSonParcingExam" />
             <option value="$PROJECT_DIR$/Map" />
+            <option value="$PROJECT_DIR$/MultyChatting" />
             <option value="$PROJECT_DIR$/Music" />
             <option value="$PROJECT_DIR$/Myexcise" />
             <option value="$PROJECT_DIR$/Service" />
             <option value="$PROJECT_DIR$/Serviceeventbus" />
+            <option value="$PROJECT_DIR$/TTL" />
             <option value="$PROJECT_DIR$/animation" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/geofencing" />
             <option value="$PROJECT_DIR$/memorealm" />
             <option value="$PROJECT_DIR$/weather" />
           </set>

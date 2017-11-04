@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"  >
+
+    <ImageView
+        android:src="@drawable/ic_account_circle_black_24dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="홍길동"/>
+
+      <TextView
+          android:id="@+id/message_text_view"
+          android:background="@drawable/thm_chatroom_message_bubble_you_bg"
+          android:layout_gravity="start"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text= "인사드립니다. "
+          android:textSize="24dp"/>
+
+    <TextView
+        android:id="@+id/time-text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        tools:text="17:00"/>
+
+
+</LinearLayout>

@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
  */
 
 public class MyMusicCursorAdapter extends CursorAdapter {
+
     public static final String TAG = MyMusicCursorAdapter.class.getSimpleName();
 
     public MyMusicCursorAdapter(Context context, Cursor c) {

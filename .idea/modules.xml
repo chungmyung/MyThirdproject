@@ -2,19 +2,21 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Customview/Customview.iml" filepath="$PROJECT_DIR$/Customview/Customview.iml" />
       <module fileurl="file://$PROJECT_DIR$/DbFirebaseExam/DbFirebaseExam.iml" filepath="$PROJECT_DIR$/DbFirebaseExam/DbFirebaseExam.iml" />
       <module fileurl="file://$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" filepath="$PROJECT_DIR$/DbRealmExam/DbRealmExam.iml" />
       <module fileurl="file://$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" filepath="$PROJECT_DIR$/DbSQLiteexam/DbSQLiteexam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Geofence/Geofence.iml" filepath="$PROJECT_DIR$/Geofence/Geofence.iml" />
       <module fileurl="file://$PROJECT_DIR$/JSonParcingExam/JSonParcingExam.iml" filepath="$PROJECT_DIR$/JSonParcingExam/JSonParcingExam.iml" />
       <module fileurl="file://$PROJECT_DIR$/Map/Map.iml" filepath="$PROJECT_DIR$/Map/Map.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultyChatting/MultyChatting.iml" filepath="$PROJECT_DIR$/MultyChatting/MultyChatting.iml" />
       <module fileurl="file://$PROJECT_DIR$/Music/Music.iml" filepath="$PROJECT_DIR$/Music/Music.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyThirdproject.iml" filepath="$PROJECT_DIR$/MyThirdproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/Myexcise/Myexcise.iml" filepath="$PROJECT_DIR$/Myexcise/Myexcise.iml" />
       <module fileurl="file://$PROJECT_DIR$/Service/Service.iml" filepath="$PROJECT_DIR$/Service/Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/Serviceeventbus/Serviceeventbus.iml" filepath="$PROJECT_DIR$/Serviceeventbus/Serviceeventbus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TTL/TTL.iml" filepath="$PROJECT_DIR$/TTL/TTL.iml" />
       <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/geofencing/geofencing.iml" filepath="$PROJECT_DIR$/geofencing/geofencing.iml" />
       <module fileurl="file://$PROJECT_DIR$/memorealm/memorealm.iml" filepath="$PROJECT_DIR$/memorealm/memorealm.iml" />
       <module fileurl="file://$PROJECT_DIR$/weather/weather.iml" filepath="$PROJECT_DIR$/weather/weather.iml" />
     </modules>

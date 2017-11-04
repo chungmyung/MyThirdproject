@@ -3,12 +3,12 @@ package com.chungmyung.dbsqliteexam;
 import android.provider.BaseColumns;
 
 /**
- * Created by user on 2017-09-23.
+ * 스키마 정의
  */
 
 public final class UserContract {
-    private UserContract () {}
 
+    private UserContract () {}
 
     public static class UserEntry implements BaseColumns {
         public static final String TABLE_NAME = "user";
