@@ -45,8 +45,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Geocoder mGeocoder;
 
-    private GeofencingClient mGeofencingClient;
-
+    private GeofencingClient mGeofencingClient ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
